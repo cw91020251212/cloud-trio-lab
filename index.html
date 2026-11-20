@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用最簡單的生活例子，一步一步認識網頁、Cloudflare Worker、D1、Firebase FCM，以及怎樣把程式放上網。">
+  <meta name="theme-color" content="#f5f7f4">
+  <title>雲端搭檔｜三件套入門・Cloud Trio Lab</title>
+  <link rel="icon" type="image/png" href="./icon.png">
+  <style>
+:root{color-scheme:light;--ink:#18304b;--muted:#50647a;--paper:#f4f7ff;--card:#fff;--line:#dce5f1;--blue:#365de8;--blue-pale:#edf1ff;--orange:#bb5425;--orange-pale:#fff0e7;--green:#167b60;--green-pale:#e4f7ef;--gold:#765300;--gold-pale:#fff5d6;--shadow:0 14px 36px rgba(38,59,110,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:105px}body{margin:0;background:radial-gradient(ellipse at 10% 0,#e8efff 0,transparent 34rem),var(--paper);color:var(--ink);font:17px/1.78 system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}a{color:#234bbd;text-underline-offset:3px}a:hover{color:#123276}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #ffad46;outline-offset:3px}.skip-link{position:absolute;left:-9999px;top:0;background:white;padding:.7rem;z-index:30}.skip-link:focus{left:1rem;top:1rem}.topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.topbar-inner{max-width:1120px;margin:auto;padding:.55rem 1.1rem}.brandline{display:flex;align-items:center;gap:.65rem;margin:0 0 .4rem;font-weight:900;letter-spacing:.01em}.brandline img{width:34px;height:34px;object-fit:contain}.brandline small{font-size:.75rem;color:var(--muted);font-weight:700;margin-left:.25rem}nav{display:flex;gap:.45rem;overflow-x:auto;padding:.1rem 0 .25rem;scrollbar-width:thin}nav a{flex:0 0 auto;text-decoration:none;font-size:.82rem;font-weight:750;color:var(--ink);border:1px solid var(--line);border-radius:999px;background:#fff;padding:.28rem .72rem}main{max-width:1060px;padding:1.4rem 1.1rem 3.5rem;margin:auto}.hero{color:#fff;border-radius:30px;padding:clamp(1.4rem,5vw,3.2rem);background:linear-gradient(125deg,#294ed4 0%,#536be8 48%,#9a4ac4 100%);box-shadow:var(--shadow);overflow:hidden;position:relative}.hero:after{content:"";width:280px;height:280px;position:absolute;right:-60px;bottom:-145px;border:1px solid rgba(255,255,255,.25);border-radius:50%;box-shadow:0 0 0 27px rgba(255,255,255,.07),0 0 0 58px rgba(255,255,255,.05)}.hero-head{display:flex;align-items:center;gap:1.1rem;position:relative;z-index:1}.hero-icon{width:clamp(72px,14vw,126px);height:clamp(72px,14vw,126px);object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 8px 16px #18276055)}.eyebrow{font-size:.83rem;font-weight:850;letter-spacing:.08em;color:#e8eaff;text-transform:uppercase}h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.2;margin:.35rem 0 .55rem;letter-spacing:-.03em}.hero p{max-width:700px;margin:.45rem 0;color:#f2f3ff}.hero strong{color:white}.hero-tags{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:1rem;position:relative;z-index:1}.hero-tags span{border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.13);border-radius:999px;padding:.25rem .7rem;font-size:.85rem;font-weight:700}.hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem;position:relative;z-index:2}.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border:0;border-radius:999px;padding:.68rem 1.08rem;font:inherit;font-size:.94rem;font-weight:850;text-decoration:none;cursor:pointer}.start-btn{background:#fff;color:#294ed4}.share-btn{background:#ffdb75;color:#392d00;box-shadow:0 7px 18px #171f5330}.action-btn:hover{transform:translateY(-1px);filter:brightness(.98)}.share-status{font-size:.86rem;font-weight:700;min-height:1.4em;margin:.45rem 0 0;color:#fff}.one-line{margin:1rem 0 0;padding:1rem 1.1rem;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);font-size:1.04rem;font-weight:800}.one-line span{color:var(--blue)}section{margin-top:2.65rem}.section-kicker{margin:0 0 .2rem;color:var(--blue);font-size:.8rem;font-weight:900;letter-spacing:.08em}h2{font-size:clamp(1.5rem,4vw,2.05rem);line-height:1.32;margin:.15rem 0 .55rem;letter-spacing:-.02em}h3{font-size:1.12rem;line-height:1.45;margin:0 0 .4rem}p{margin:.45rem 0 .85rem}.lede{color:var(--muted);max-width:760px;margin-bottom:1rem}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.15rem;box-shadow:0 5px 18px rgba(24,42,53,.035)}.story{border-left:5px solid #f2a43a;background:#fffaf0}.story-title{font-size:1.18rem;font-weight:900}.story-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1rem}.story-step{background:white;border:1px solid #eadfc7;border-radius:14px;padding:.85rem}.story-step b{display:block;color:var(--orange);font-size:.86rem;margin-bottom:.25rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}.parts{grid-template-columns:repeat(2,minmax(0,1fr))}.part{position:relative;padding-left:1.1rem;overflow:hidden}.part:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--blue)}.part.worker:before{background:#e26d32}.part.d1:before{background:#399174}.part.fcm:before{background:#d4a21e}.part.pages:before{background:#71839a}.part-label{display:inline-block;font-size:.77rem;font-weight:800;color:var(--muted);background:#f0f3f2;padding:.08rem .45rem;border-radius:999px;margin-bottom:.35rem}.part p{color:var(--muted);margin-bottom:.35rem}.part .analogy{color:var(--ink);font-weight:750;margin-top:.65rem}.notice{border-radius:15px;padding:.9rem 1rem;border:1px solid #e9d69c;background:var(--gold-pale);color:#4e400f;margin:1rem 0}.notice strong{color:#493508}.flow-list{display:grid;gap:.72rem}.flow-row{display:grid;grid-template-columns:48px 1fr;gap:.85rem;align-items:start;background:white;border:1px solid var(--line);border-radius:16px;padding:.9rem 1rem}.flow-num{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--blue-pale);color:var(--blue);font-weight:950;font-size:1.05rem}.flow-row h3{margin:.05rem 0 .15rem}.flow-row p{margin:0;color:var(--muted)}.mini-label{display:inline-block;margin-top:.38rem;padding:.08rem .5rem;border-radius:999px;font-size:.76rem;font-weight:800;background:var(--green-pale);color:var(--green)}.decision{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:1rem;align-items:stretch}.chooser{background:#edf3ff;border:1px solid #cfdbfa}label{display:block;font-weight:800;margin-bottom:.4rem}select{width:100%;font:inherit;color:var(--ink);background:white;border:1px solid #9cbac4;border-radius:12px;padding:.75rem .8rem}.answer{min-height:100%;background:white;border:2px solid #bdd8df}.answer h3{color:var(--blue)}.answer p{margin-bottom:.25rem}.stack{display:flex;flex-wrap:wrap;gap:.4rem;margin:.65rem 0}.stack span{background:var(--blue-pale);color:#124c61;border-radius:8px;padding:.17rem .5rem;font-size:.83rem;font-weight:850}.steps{display:grid;gap:.9rem}.step-card{display:grid;grid-template-columns:54px 1fr;gap:1rem;align-items:start;background:white;border:1px solid var(--line);border-radius:18px;padding:1rem}.step-no{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;color:white;background:var(--blue);font-size:1.2rem;font-weight:950}.step-card:nth-child(2) .step-no{background:#71839a}.step-card:nth-child(3) .step-no{background:#d16d30}.step-card:nth-child(4) .step-no{background:#399174}.step-card:nth-child(5) .step-no{background:#c49422}.step-card:nth-child(6) .step-no{background:#486c9a}.step-card h3{margin:.05rem 0 .25rem}.step-card p{color:var(--muted);margin:.2rem 0 .45rem}.step-card ul{margin:.35rem 0 .15rem;padding-left:1.25rem}.step-card li{margin:.18rem 0}.example-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.example{background:white;border:1px solid var(--line);border-radius:15px;padding:.85rem 1rem}.example b{display:block;color:var(--blue);margin-bottom:.15rem}.example p{color:var(--muted);margin:0;font-size:.95rem}.glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.term{background:white;border:1px solid var(--line);border-radius:13px;padding:.72rem .85rem}.term b{color:var(--blue)}.term span{color:var(--muted);display:block;font-size:.92rem}.check-list{display:grid;gap:.45rem;padding-left:1.25rem}.check-list li::marker{color:var(--green)}.source-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;padding:0;list-style:none}.source-list a{display:block;background:white;border:1px solid var(--line);border-radius:12px;text-decoration:none;padding:.65rem .8rem;font-weight:750}.source-list a small{display:block;color:var(--muted);font-weight:500}footer{text-align:center;color:var(--muted);font-size:.85rem;padding:2rem 1rem;border-top:1px solid var(--line)}.small{font-size:.9rem;color:var(--muted)}.pill{display:inline-block;padding:.1rem .55rem;border-radius:999px;background:var(--orange-pale);color:#8c4317;font-size:.83rem;font-weight:850}@media(max-width:700px){body{font-size:16px;line-height:1.75}.story-flow{grid-template-columns:1fr 1fr}.decision{grid-template-columns:1fr}.grid,.parts,.example-grid,.glossary,.source-list{grid-template-columns:1fr}.topbar-inner{padding-inline:.8rem}main{padding-inline:.85rem}.hero{border-radius:21px}.step-card{grid-template-columns:42px 1fr;gap:.7rem;padding:.85rem}.step-no{width:40px;height:40px;border-radius:13px}.flow-row{grid-template-columns:40px 1fr;gap:.65rem;padding:.8rem}.flow-num{width:36px;height:36px}.hero-head{align-items:flex-start}}@media(max-width:390px){.story-flow{grid-template-columns:1fr}h1{font-size:1.9rem}.hero-icon{width:64px;height:64px}.brandline small{display:block;margin:0}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到教學內容</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <p class="brandline"><img src="./icon.png" alt="" aria-hidden="true">雲端搭檔｜三件套入門 <small>Cloud Trio Lab</small></p>
+      <nav aria-label="頁面目錄">
+        <a href="#story">生活例子</a>
+        <a href="#parts">認識角色</a>
+        <a href="#journey">通知點送到</a>
+        <a href="#choose">揀需要嘅工具</a>
+        <a href="#steps">上網步驟</a>
+        <a href="#mistakes">常見誤會</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="hero">
+      <div class="hero-head"><img class="hero-icon" src="./icon.png" alt="雲端搭檔圖示"><div><div class="eyebrow">Cloud Trio Lab・由生活例子開始</div>
+      <h1>雲端搭檔<br>三件套入門</h1></div></div>
+      <p>Worker、D1、FCM 聽落好深？其實可以先當成一隊幫手：<strong>有人做事、有人記低、有人送通知。</strong></p>
+      <p>我哋會用「煲湯夠鐘，手機收到提醒」做例子，一步一步睇清楚佢哋點合作，以及點樣先將一個小程式放上網。</p>
+      <div class="hero-tags"><span>先明白用途</span><span>再學步驟</span><span>唔需要一開始用齊所有工具</span></div>
+      <div class="hero-actions"><a class="action-btn start-btn" href="#story">開始學習 <span aria-hidden="true">↓</span></a><button class="action-btn share-btn" id="share-button" type="button" aria-describedby="share-status">分享呢份教學 <span aria-hidden="true">↗</span></button></div><p class="share-status" id="share-status" role="status" aria-live="polite"></p>
+    </header>
+
+    <div class="one-line">先記住一句：<span>網頁俾人用；Worker 負責做事；D1 幫手記低；FCM 負責送通知。</span></div>
+
+    <section id="story">
+      <p class="section-kicker">第一課｜先睇生活例子</p>
+      <h2>假設你想：煲湯 45 分鐘後提醒我</h2>
+      <p class="lede">你用手機開一個網頁，輸入「45 分鐘後提醒我熄火」。之後你關掉網頁、鎖上手機。問題係：咁耐之後，邊個記得提醒你？</p>
+      <div class="card story">
+        <div class="story-title">可以想像成一間小店接到一張「提醒單」</div>
+        <p>手機上的網頁負責收你填的資料；雲端幫手負責保存和處理；時間到了，再交給通知速遞員送去你的手機。</p>
+        <div class="story-flow" aria-label="煲湯提醒簡化流程">
+          <div class="story-step"><b>1｜你填資料</b>「45 分鐘後叫我熄火。」</div>
+          <div class="story-step"><b>2｜雲端記低</b>記住提醒內容、時間和送去哪部裝置。</div>
+          <div class="story-step"><b>3｜時間到了</b>雲端按排程檢查有沒有到時的提醒。</div>
+          <div class="story-step"><b>4｜手機收到</b>推播服務把通知送到手機，手機顯示提醒。</div>
+        </div>
+      </div>
+      <div class="notice"><strong>重要：</strong>如果只是一個普通網頁計時器，關掉網頁後，它通常就不能靠自己繼續計時。要關掉網頁後仍收到推播，還要另外做好雲端排程、通知服務、手機權限和網頁背景接收設定；不是把網頁放上網就自動完成。</div>
+    </section>
+
+    <section id="parts">
+      <p class="section-kicker">第二課｜認識每個角色</p>
+      <h2>其實唔係三個都做同一件事</h2>
+      <p class="lede">另外先認識「網頁寄存」：它是放網頁給人看的地方，不等於 Worker。下面用小店做比喻。</p>
+      <div class="grid parts">
+        <article class="card part pages">
+          <span class="part-label">先讓網頁上網</span>
+          <h3>Cloudflare Pages｜網頁的公開地址</h3>
+          <p>把 HTML、圖片、樣式等前台檔案放上網，別人就可以用網址打開。</p>
+          <p class="analogy">好比：小店門面和招牌，讓客人找得到。</p>
+        </article>
+        <article class="card part worker">
+          <span class="part-label">Cloudflare</span>
+          <h3>Worker｜接單和處理事情的店員</h3>
+          <p>收到網頁送來的要求後，按規則做事，例如檢查資料、計算結果、查詢資料庫或呼叫其他服務。</p>
+          <p class="analogy">好比：看懂訂單、決定下一步的店員。</p>
+        </article>
+        <article class="card part d1">
+          <span class="part-label">Cloudflare</span>
+          <h3>D1｜雲端的資料表</h3>
+          <p>把需要長期保存的資料放好，例如提醒文字、時間和目前是否已送出。它像一張有欄位的試算表，但由程式管理。</p>
+          <p class="analogy">好比：店裡的訂單簿，方便日後翻查。</p>
+        </article>
+        <article class="card part fcm">
+          <span class="part-label">Google Firebase</span>
+          <h3>FCM｜推播通知的派件員</h3>
+          <p>由你的伺服器交出訊息和收件裝置資料，再由 FCM 協助把推播傳到支援的手機或瀏覽器。</p>
+          <p class="analogy">好比：把提醒送往正確地址的速遞員。</p>
+        </article>
+      </div>
+      <p class="small">「Cloudflare Worker」和「Cloudflare D1」屬於 Cloudflare；「Firebase FCM」屬於 Google Firebase。Pages 可以用來放靜態網頁。想看官方介紹：<a href="https://developers.cloudflare.com/pages/" target="_blank" rel="noopener">Cloudflare Pages</a>、<a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">Workers</a>。</p>
+    </section>
+
+    <section id="journey">
+      <p class="section-kicker">第三課｜跟住一張提醒單行一次</p>
+      <h2>「煲湯夠鐘」的通知，點樣由網頁去到手機？</h2>
+      <p class="lede">把複雜的技術流程先簡化成五步。實際程式仍要設定每一個連接位。</p>
+      <div class="flow-list">
+        <article class="flow-row"><div class="flow-num">1</div><div><h3>你在網頁按「建立提醒」</h3><p>網頁把提醒內容、預定時間和目標裝置的識別資料送去 Worker。這個「送出要求」可以想成把訂單交給店員。</p><span class="mini-label">手機 → Worker</span></div></article>
+        <article class="flow-row"><div class="flow-num">2</div><div><h3>Worker 把提醒寫進 D1</h3><p>例如新增一行：「熄火提醒｜今晚 7:45｜未送出」。這樣就算你關掉網頁，資料仍然留在雲端。</p><span class="mini-label">Worker → D1</span></div></article>
+        <article class="flow-row"><div class="flow-num">3</div><div><h3>設定好的排程叫 Worker 檢查</h3><p>要由你設定排程觸發（例如每隔一段時間檢查一次）。Worker 被叫醒後，查看 D1 有沒有到時而且未送出的提醒。</p><span class="mini-label">排程 → Worker → D1</span></div></article>
+        <article class="flow-row"><div class="flow-num">4</div><div><h3>時間到了，Worker 請 FCM 派件</h3><p>Worker 取出提醒內容和收件裝置資料，再使用安全保管在伺服器的憑證，請 FCM 傳送推播。</p><span class="mini-label">Worker → FCM</span></div></article>
+        <article class="flow-row"><div class="flow-num">5</div><div><h3>手機或瀏覽器顯示通知</h3><p>如果使用者已允許通知、裝置和瀏覽器支援、網絡及系統設定正常，手機便可以顯示推播。送出後，程式亦應把這行資料標記為「已送出」，免得重複提醒。</p><span class="mini-label">FCM → 手機</span></div></article>
+      </div>
+      <div class="notice"><strong>唔使背技術名：</strong>你只要記得「資料先存好 → 排程到時檢查 → 通知服務負責派送」。FCM 不會自己知道你的湯幾時煲好；Worker 和排程才負責決定幾時送。</div>
+    </section>
+
+    <section id="choose">
+      <p class="section-kicker">第四課｜先選最少的工具</p>
+      <h2>不是每個程式都要「三件套」</h2>
+      <p class="lede">選一個最接近你想做的功能，看看大概需要甚麼。你可以先由最簡單版本開始。</p>
+      <div class="decision">
+        <div class="card chooser">
+          <label for="need-picker">我想做的功能是……</label>
+          <select id="need-picker">
+            <option value="calc">單人用的小計算機或小工具</option>
+            <option value="site">一個任何人都能用網址打開的介紹網頁</option>
+            <option value="sync">手機和電腦都要讀寫同一份資料</option>
+            <option value="secret">需要保護 API 密鑰，在伺服器代為呼叫服務</option>
+            <option value="push">關掉網頁後，仍要在手機收到提醒</option>
+          </select>
+          <p class="small">選項只作入門方向，實際組合會按你的功能改變。</p>
+        </div>
+        <div class="card answer" aria-live="polite" aria-atomic="true">
+          <h3 id="answer-title">先由簡單計算機開始</h3>
+          <div class="stack" id="answer-stack"><span>HTML 網頁</span></div>
+          <p id="answer-text">如果只要在目前裝置做簡單計算，先做網頁就可以；資料不必送去雲端，亦不必先申請 D1 或 FCM。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="steps">
+      <p class="section-kicker">第五課｜從想法到上網的次序</p>
+      <h2>一步一步做，唔好一開始做晒</h2>
+      <p class="lede">用「煲湯提醒」做例子。每做完一步先試清楚，再決定要不要加下一樣。</p>
+      <div class="steps">
+        <article class="step-card"><div class="step-no">1</div><div><h3>用一句說清楚你要做甚麼</h3><p>例如：「我想輸入一個時間，之後收到『記得熄火』提醒。」先不要想太多工具，先把使用者要做的事說清楚。</p><p><span class="pill">目標：知道要解決甚麼問題</span></p></div></article>
+        <article class="step-card"><div class="step-no">2</div><div><h3>先做好一張簡單網頁</h3><p>做出輸入框、按鈕和提示文字。第一版可以只在網頁開著時試功能，不用先做雲端通知。</p><ul><li>輸入：「45 分鐘」</li><li>按鈕：「設定提醒」</li><li>畫面顯示：「已設定，預計 7:45 提醒」</li></ul><p>這一步學的是前台：使用者看見和按到的部分。</p></div></article>
+        <article class="step-card"><div class="step-no">3</div><div><h3>把網頁放上網，取得網址</h3><p>靜態網頁可以放到像 Cloudflare Pages 這種寄存服務。常見做法是上載網站檔案，或連接程式碼專案；部署完成後會有一個 HTTPS 網址可以打開。</p><p><strong>記住：</strong>這一步只是讓人看得到網頁，不代表提醒已經能在背景運作。</p></div></article>
+        <article class="step-card"><div class="step-no">4</div><div><h3>有雲端工作要做，才加 Worker</h3><p>例如網頁送來「幫我保存這個提醒」，Worker 就接收資料、檢查格式，再決定怎樣處理。它像一個接單的雲端小幫手。</p><p>如果你的程式不需要後台處理，就先不要加。</p></div></article>
+        <article class="step-card"><div class="step-no">5</div><div><h3>要長期保存或同步，才加 D1</h3><p>建立資料庫和表格，再設定 Worker 可以連到它（官方文件稱為 binding／綁定）。先把一筆測試提醒寫入，再讀回來確認。</p><p>想像表格有幾欄：「提醒內容｜幾時提醒｜送去哪部裝置｜狀態」。</p></div></article>
+        <article class="step-card"><div class="step-no">6</div><div><h3>真的要推播，最後才加 FCM 和排程</h3><p>這一步最需要留心，因為不是只貼一段設定碼就完成。</p><ul><li>網頁需要 HTTPS；設定通知權限和背景接收用的 service worker。</li><li>每部裝置要先完成通知註冊，程式才知道推播送去哪裡。</li><li>Worker 要安全地保管發送所需的秘密憑證；不要寫進公開網頁程式碼。</li><li>另外設定排程檢查 D1，夠鐘後再請 FCM 發送。</li></ul><p>先用自己的手機做一次測試，確認按允許通知、鎖屏或把網頁放到背景後的實際表現。</p></div></article>
+      </div>
+      <p class="small">Cloudflare 官方 D1 入門說明會示範建立資料庫，並把資料庫綁定給 Worker 使用；Firebase 官方網頁 FCM 文件則說明 HTTPS、通知權限及 service worker 等設定。介面名稱可能更新，做實際操作時請跟官方文件的最新版步驟。</p>
+    </section>
+
+    <section id="examples">
+      <p class="section-kicker">第六課｜多幾個生活例子</p>
+      <h2>把工具組合想成「按需要加零件」</h2>
+      <div class="example-grid">
+        <article class="example"><b>的士車費計算機</b><p>單純輸入公里數計價：先做網頁就可以。不用推播，不一定需要資料庫。</p></article>
+        <article class="example"><b>多人旅行記帳</b><p>要不同人登入後共用同一份支出：需要後台處理和資料保存，例如 Worker 加資料庫。</p></article>
+        <article class="example"><b>煲湯 45 分鐘後提醒</b><p>若網頁關掉後仍要推播：還要安排雲端檢查時間、保存提醒、設定 FCM 和手機通知。</p></article>
+        <article class="example"><b>用 AI 服務的網頁</b><p>如果有私人 API 密鑰，呼叫服務時通常應由伺服器端代辦，不要把秘密放在公開網頁檔案裡。</p></article>
+      </div>
+    </section>
+
+    <section id="mistakes">
+      <p class="section-kicker">第七課｜先避開幾個常見誤會</p>
+      <h2>呢幾點記住，就唔容易搞亂</h2>
+      <div class="card">
+        <ul class="check-list">
+          <li><strong>Worker 不等於一部永遠開著的家用電腦。</strong>它收到要求時會執行；要定時做事，就必須另外設定 Cron Trigger 等排程。排程代表按設定週期執行，不要當成精準到秒的鬧鐘。</li>
+          <li><strong>FCM 不負責倒數時間。</strong>它主要協助送推播；「幾時要送」要由你的程式和排程處理。</li>
+          <li><strong>把網頁放上網，不等於它自動有資料庫或推播。</strong>Pages 放網站；Worker、D1、FCM 各自需要設定和程式配合。</li>
+          <li><strong>推播不是保證一定響。</strong>用戶要允許通知；瀏覽器和裝置要支援；網絡、電量設定和系統設定亦可能影響顯示。</li>
+          <li><strong>「免費」不是永遠不變的承諾。</strong>服務方案、免費額度和收費規則可能改變。正式部署前先看當時官方方案及用量，不要假設永遠免費或無上限。</li>
+          <li><strong>私人憑證不要放進 HTML。</strong>HTML 會送到使用者的裝置上；可以讓 Worker 保管伺服器用的秘密，避免公開洩漏。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="words">
+      <p class="section-kicker">小字典｜遇到英文唔使驚</p>
+      <h2>六個常見字，白話解釋</h2>
+      <div class="glossary">
+        <div class="term"><b>前台／網頁</b><span>使用者看見、輸入資料和按按鈕的畫面。</span></div>
+        <div class="term"><b>後台／伺服器</b><span>在雲端替網頁處理工作，不是使用者眼前的畫面。</span></div>
+        <div class="term"><b>資料庫</b><span>有欄位、可以新增和查找資料的雲端記錄簿。</span></div>
+        <div class="term"><b>部署／上線</b><span>把程式放到網上服務，讓網址可以打開或讓後台可以執行。</span></div>
+        <div class="term"><b>API</b><span>兩個程式互相傳資料或請對方做事的一個入口。</span></div>
+        <div class="term"><b>Token／裝置識別資料</b><span>幫推播服務找到目標裝置的識別資料；不是收件人的普通姓名，也不應隨意公開。</span></div>
+      </div>
+    </section>
+
+    <section id="recap">
+      <p class="section-kicker">最後複習｜今日記住四句就夠</p>
+      <h2>你已經有一張簡單地圖</h2>
+      <div class="card">
+        <ol class="check-list">
+          <li>先做一個最小、能用的網頁，不要一開始就加所有雲端功能。</li>
+          <li>Pages 幫你把網頁放上網；Worker 幫你在雲端處理要求。</li>
+          <li>D1 保存要記住的資料；FCM 協助派送推播。</li>
+          <li>要關掉網頁後收到提醒，還要有排程、資料、推播設定和裝置權限。</li>
+        </ol>
+        <p><strong>下一步建議：</strong>先畫出你自己的「手機 → Worker → D1／FCM」簡單流程，再只做第一個小功能。每一步做通，才加下一個零件。</p>
+      </div>
+    </section>
+
+    <section id="sources">
+      <p class="section-kicker">想繼續學｜官方資料</p>
+      <h2>有需要先打開，不用一次看完</h2>
+      <p class="lede">這些官方頁面偏技術，當作查答案用就好；本教材先幫你建立整體概念。</p>
+      <ul class="source-list">
+        <li><a href="https://developers.cloudflare.com/pages/" target="_blank" rel="noopener">Cloudflare Pages<small>放置和部署網站</small></a></li>
+        <li><a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">Cloudflare Workers<small>雲端程式及執行環境</small></a></li>
+        <li><a href="https://developers.cloudflare.com/d1/get-started/" target="_blank" rel="noopener">Cloudflare D1 入門<small>建立資料庫並連接 Worker</small></a></li>
+        <li><a href="https://developers.cloudflare.com/workers/configuration/cron-triggers/" target="_blank" rel="noopener">Workers Cron Triggers<small>如何設定定時執行</small></a></li>
+        <li><a href="https://firebase.google.com/docs/cloud-messaging/web/get-started" target="_blank" rel="noopener">Firebase 網頁推播入門<small>HTTPS、通知權限和網頁設定</small></a></li>
+        <li><a href="https://firebase.google.com/docs/cloud-messaging/web/receive-messages" target="_blank" rel="noopener">Firebase 網頁接收訊息<small>前景及背景訊息處理</small></a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>雲端搭檔｜三件套入門・Cloud Trio Lab<br>獨立教學頁｜GitHub repository：cloud-trio-lab</footer>
+
+  <script>
+    const choices = {
+      calc: {
+        title: '先由簡單計算機開始',
+        parts: ['HTML 網頁'],
+        text: '如果只要在目前裝置做簡單計算，先做網頁就可以；資料不必送去雲端，亦不必先申請 D1 或 FCM。'
+      },
+      site: {
+        title: '先把網頁放到公開網址',
+        parts: ['HTML 網頁', 'Cloudflare Pages'],
+        text: 'Pages 可以寄存你的網站檔案，讓人用網址打開。單純展示介紹內容，不一定需要 Worker、D1 或 FCM。'
+      },
+      sync: {
+        title: '需要雲端處理和保存資料',
+        parts: ['網頁／Pages', 'Worker', 'D1（需要長期保存時）'],
+        text: 'Worker 接收和處理資料；要讓資料保存、跨裝置讀取，才加資料庫。再按登入和權限等實際要求設計。'
+      },
+      secret: {
+        title: '需要安全地從後台呼叫服務',
+        parts: ['網頁', 'Worker'],
+        text: '把私人密鑰留在 Worker 的伺服器端設定中，由 Worker 代替網頁呼叫外部服務。除非要保存資料，否則未必需要 D1。'
+      },
+      push: {
+        title: '要處理完整的背景推播',
+        parts: ['網頁／Pages', 'Worker + 排程', 'D1', 'FCM'],
+        text: '需要儲存提醒、由排程檢查時間，再請 FCM 派送。網頁 HTTPS、service worker、裝置註冊和通知權限也不可少。'
+      }
+    };
+    const picker = document.getElementById('need-picker');
+    function showChoice() {
+      const item = choices[picker.value];
+      document.getElementById('answer-title').textContent = item.title;
+      document.getElementById('answer-text').textContent = item.text;
+      const stack = document.getElementById('answer-stack');
+      stack.replaceChildren(...item.parts.map(part => {
+        const badge = document.createElement('span');
+        badge.textContent = part;
+        return badge;
+      }));
+    }
+    picker.addEventListener('change', showChoice);
+
+    const shareButton = document.getElementById('share-button');
+    const shareStatus = document.getElementById('share-status');
+    function isPublicShareUrl() {
+      return location.protocol === 'https:' && (location.hostname === 'github.io' || location.hostname.endsWith('.github.io'));
+    }
+    async function copyPageUrl() {
+      try {
+        if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(location.href); return true; }
+      } catch (_) { /* 降級至傳統複製方式 */ }
+      try {
+        const field = document.createElement('textarea'); field.value = location.href; field.setAttribute('readonly', '');
+        field.style.position = 'fixed'; field.style.opacity = '0'; document.body.appendChild(field); field.select();
+        const ok = document.execCommand('copy'); field.remove(); return ok;
+      } catch (_) { return false; }
+    }
+    shareButton.addEventListener('click', async () => {
+      if (!isPublicShareUrl()) {
+        shareStatus.textContent = '尚未確認為正式 GitHub Pages 頁面，因此不會分享目前網址。請先部署到正式 GitHub Pages（*.github.io）；file://、localhost 及臨時預覽網址都不是永久公開連結。';
+        return;
+      }
+      const data = { title: document.title, text: '雲端搭檔｜三件套入門：用生活例子認識 Pages、Worker、D1 和 FCM。', url: location.href };
+      try {
+        if (navigator.share) { await navigator.share(data); shareStatus.textContent = '已開啟分享選單。'; return; }
+      } catch (err) { if (err && err.name === 'AbortError') { shareStatus.textContent = '已取消分享。'; return; } }
+      const copied = await copyPageUrl();
+      if (copied) shareStatus.textContent = '頁面網址已複製，可以貼給朋友。';
+      else shareStatus.textContent = '無法自動複製。請手動選取並複製網址列中的正式 GitHub Pages 網址。';
+    });
+  </script>
+</body>
+</html>
